@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matthew Corbelli — Research Mathematician</title>
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --text:       #1a1a1a;
+      --muted:      #555;
+      --accent:     #1a4a8a;
+      --accent-light: #e8f0fb;
+      --border:     #d8d8d8;
+      --bg:         #ffffff;
+      --max-w:      720px;
+      --font:       'Georgia', 'Times New Roman', serif;
+      --font-sans:  system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ── Header ── */
+    header {
+      border-bottom: 2px solid var(--text);
+      padding: 3rem 0 2rem;
+    }
+
+    header .container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    header h1 {
+      font-family: var(--font-sans);
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    header .title {
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    /* ── Nav ── */
+    nav {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav .container {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+
+    nav a {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.75rem 1rem 0.65rem;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ── Main content ── */
+    main { padding: 3rem 0 4rem; }
+
+    section { margin-bottom: 3.5rem; }
+
+    section:last-child { margin-bottom: 0; }
+
+    section h2 {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Bio ── */
+    #about p {
+      margin-bottom: 0.9rem;
+      color: var(--text);
+    }
+
+    #about p:last-child { margin-bottom: 0; }
+
+    /* ── CV ── */
+    .cv-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.6rem 1.2rem;
+      border-radius: 3px;
+      transition: background 0.15s;
+    }
+
+    .cv-link:hover { background: #143d74; }
+
+    .cv-link svg {
+      flex-shrink: 0;
+    }
+
+    .cv-note {
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+    }
+
+    /* ── Publications ── */
+    .pub-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .pub {
+      padding-left: 1rem;
+      border-left: 3px solid var(--accent-light);
+    }
+
+    .pub p {
+      font-size: 0.97rem;
+      margin-bottom: 0.3rem;
+      line-height: 1.6;
+    }
+
+    .pub .journal {
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .pub .doi-link {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-decoration: none;
+      margin-top: 0.25rem;
+      word-break: break-all;
+    }
+
+    .pub .doi-link:hover { text-decoration: underline; }
+
+    .pub .badge {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.15em 0.5em;
+      border-radius: 2px;
+      margin-right: 0.4rem;
+      vertical-align: middle;
+    }
+
+    .badge-pub  { background: var(--accent-light); color: var(--accent); }
+    .badge-pre  { background: #f0f4e8; color: #3a6a0a; }
+
+    /* ── Projects ── */
+    .project-card {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .project-card h3 {
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .project-card p {
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .placeholder-note {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      color: #999;
+      font-style: italic;
+      margin-top: 0.5rem;
+    }
+
+    /* ── Contact ── */
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+    }
+
+    .contact-item svg {
+      flex-shrink: 0;
+      color: var(--muted);
+    }
+
+    .contact-item a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .contact-item a:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 0;
+    }
+
+    footer p {
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      color: #aaa;
+      text-align: center;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 500px) {
+      header h1 { font-size: 1.6rem; }
+      body { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header>
+    <div class="container">
+      <h1>Matthew Corbelli</h1>
+      <span class="title">Research Mathematician &nbsp;·&nbsp; Postdoctoral Researcher</span>
+    </div>
+  </header>
+
+  <!-- ── Navigation ── -->
+  <nav>
+    <div class="container">
+      <a href="#about">About</a>
+      <a href="#cv">CV</a>
+      <a href="#publications">Publications</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ── Main ── -->
+  <main>
+    <div class="container">
+
+      <!-- About -->
+      <section id="about">
+        <h2>About</h2>
+        <!-- PLACEHOLDER: Please review and adjust this bio before publishing. -->
+        <p>
+          I am a mathematician working at the intersection of mathematical physics and quantum information,
+          with a focus on quantum lattice systems and topological phases of matter. My research centres
+          on the mathematical structure of anyons, fractional quantum Hall systems, and the rigorous
+          formulation of superselection sectors in two-dimensional quantum spin systems.
+        </p>
+        <p>
+          I received my PhD in Mathematics from the University of California, Davis in 2025.
+          I am currently seeking postdoctoral and research scientist positions in quantum computing
+          and mathematical physics.
+        </p>
+      </section>
+
+      <!-- CV -->
+      <section id="cv">
+        <h2>Curriculum Vitae</h2>
+        <a class="cv-link" href="Corbelli_CV_and_list_of_publications-1.pdf" download>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download CV (PDF)
+        </a>
+        <p class="cv-note">Last updated April 2025</p>
+      </section>
+
+      <!-- Publications -->
+      <section id="publications">
+        <h2>Publications</h2>
+        <div class="pub-list">
+
+          <div class="pub">
+            <p>
+              <span class="badge badge-pub">Published</span>
+              Bachmann, S., <strong>Corbelli, M.</strong>, Fraas, M., &amp; Ogata, Y.
+              &ldquo;Tensor Category Describing Anyons in the Quantum Hall Effect and Quantization of Conductance.&rdquo;
+            </p>
+            <p class="journal"><em>Reviews in Mathematical Physics</em> (2025)</p>
+            <a class="doi-link" href="https://doi.org/10.1142/S0129055X24610075" target="_blank" rel="noopener">
+              doi: 10.1142/S0129055X24610075 ↗
+            </a>
+          </div>
+
+          <div class="pub">
+            <p>
+              <span class="badge badge-pre">Preprint</span>
+              <strong>Corbelli, M.</strong>
+              &ldquo;On Symmetry-Compatible Superselection Structures for Product States in 2D Quantum Spin Systems.&rdquo;
+            </p>
+            <p class="journal">arXiv preprint (2025)</p>
+            <a class="doi-link" href="https://arxiv.org/abs/2510.23790" target="_blank" rel="noopener">
+              arXiv:2510.23790 ↗
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Projects -->
+      <section id="projects">
+        <h2>Projects</h2>
+        <div class="project-card">
+          <h3>Variational Quantum Eigensolver for Lattice Hamiltonians</h3>
+          <p>
+            Implementation of VQE algorithms for lattice Hamiltonian ground-state estimation
+            on IBM Quantum hardware using Qiskit. Details and code will be added shortly.
+          </p>
+          <!-- PLACEHOLDER: Replace with writeup and GitHub link when ready. -->
+          <p class="placeholder-note">Writeup and GitHub link coming soon.</p>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact">
+        <h2>Contact</h2>
+        <div class="contact-list">
+
+          <div class="contact-item">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <a href="mailto:mdcorbelli@gmail.com">mdcorbelli@gmail.com</a>
+          </div>
+
+          <div class="contact-item">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+              <rect x="2" y="9" width="4" height="12"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
+            <a href="https://linkedin.com/in/matthewcorbelli" target="_blank" rel="noopener">
+              linkedin.com/in/matthewcorbelli ↗
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+    </div><!-- /container -->
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="container">
+      <p>Matthew Corbelli &nbsp;·&nbsp; Mathematics &amp; Mathematical Physics</p>
+    </div>
+  </footer>
+
+</body>
+</html>
